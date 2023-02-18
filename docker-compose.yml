@@ -1,0 +1,112 @@
+version: "3"
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mailcatcher-data:
+    driver: local
+
+  ### ignore folder volume #####
+  var:
+    driver: local
+  vendor:
+    driver: local
+  node_modules:
+    driver: local
+
+  pg-database:
+    driver: local
+
+services:
+  ### ECCube4 ##################################
+  ec-cube:
+    ### ローカルでビルドする場合は以下のコマンドを使用します
+    ## docker build -t ec-cube --no-cache --pull --build-arg TAG=8.1-apache .
+    ## docker tag ec-cube ghcr.io/ec-cube/ec-cube-php:8.1-apache
+    image: ${REGISTRY:-ghcr.io}/${IMAGE_NAME:-ec-cube/ec-cube-php}:${TAG:-8.1-apache}
+    ports:
+      - 8080:80
+      - 4430:443
+    volumes:
+      ### 同期対象からコストの重いフォルダを除外 #####################
+      # - "var:/var/www/html/var"
+      # - "vendor:/var/www/html/vendor"
+      # - "node_modules:/var/www/html/node_modules"
+      - ".:/var/www/html:cached"
+    environment:
+      # EC-CUBE environments
+      APP_ENV: "dev"
+      APP_DEBUG: 1
+      DATABASE_URL: "postgres://dbuser:secret@postgres/eccubedb"
+      DATABASE_SERVER_VERSION: 14
+      DATABASE_CHARSET: 'utf8'
+      MAILER_DSN: "smtp://mailcatcher:1025"
+      ECCUBE_AUTH_MAGIC: "<change.me>"
+      TRUSTED_HOSTS: '^127.0.0.1$$,^localhost$$'
+      ECCUBE_LOCALE: "ja"
+      ECCUBE_TIMEZONE: "Asia/Tokyo"
+      ECCUBE_CURRENCY: "JPY"
+      ECCUBE_ADMIN_ROUTE: "admin"
+      ECCUBE_USER_DATA_ROUTE: "user_data"
+      # ECCUBE_ADMIN_ALLOW_HOSTS: []
+      ECCUBE_FORCE_SSL: true
+      ECCUBE_TEMPLATE_CODE: "default"
+      ECCUBE_COOKIE_NAME: "eccube"
+      ECCUBE_COOKIE_PATH: "/"
+      ECCUBE_COOKIE_LIFETIME: 0
+      ECCUBE_GC_MAXLIFETIME: 1440
+      ECCUBE_ADMIN_USER: "admin"
+      ECCUBE_ADMIN_PASS: "password"
+      USER_ID: ${UID:-}
+      GROUP_ID: ${GID:-}
+    networks:
+      - backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  ### Mailcatcher ##################################
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - backend
+
+  # zap:
+  #   build:
+  #     context: ./zap
+  #   # command: bash -c "zap.sh -cmd -addonupdate -addoninstall help_ja_JP -addoninstall wappalyzer -addoninstall sequence -addonuninstall hud -configfile /zap/wrk/options.properties -certpubdump /zap/wrk/owasp_zap_root_ca.cer && zap-webswing.sh"
+  #   command: bash -c "zap.sh -cmd -addonupdate -addoninstall help_ja_JP -addoninstall wappalyzer -addoninstall ascanrulesAlpha -addoninstall ascanrulesBeta -addoninstall sqliplugin -addoninstall sequence -addonuninstall hud -configfile /zap/wrk/options.properties -certpubdump /zap/wrk/owasp_zap_root_ca.cer && zap-webswing.sh"
+  #   volumes:
+  #     - ./zap/policies:/home/zap/.ZAP/policies/
+  #     - ./zap:/zap/wrk/
+  #   ports:
+  #     - "8081:8080"
+  #     - "8090:8090"
+  #   depends_on:
+  #     - ec-cube
+  #   networks:
+  #     - backend
+  #     - default
+  #   tty: true
+
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: secret
+    ports:
+      - 15432:5432
+    volumes:
+      - ./pg-database:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: pg_isready -U dbuser
+      interval: 3s
+      timeout: 3s
+      retries: 3

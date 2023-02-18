@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b05fb2f10279b2e65fbb66f5e802c8cb",
+    "content-hash": "8543047909cbc442dac99ed8da8cabd5",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2233,6 +2233,30 @@
             "time": "2019-10-24T07:13:31+00:00"
         },
         {
+            "name": "ec-cube/coupon42",
+            "version": "4.2.4",
+            "dist": {
+                "type": "tar",
+                "url": "https://package-api-c2.ec-cube.net/v42/ec-cube/coupon42/4.2.4/Coupon42-4.2.4.tgz"
+            },
+            "require": {
+                "ec-cube/plugin-installer": "^2.0"
+            },
+            "type": "eccube-plugin",
+            "extra": {
+                "code": "Coupon42",
+                "id": 2401
+            },
+            "description": "Coupon Plugin for EC-CUBE42",
+            "transport-options": {
+                "http": {
+                    "header": [
+                        "X-ECCUBE-KEY: wFpYIGbcZ7WK4gZoIEE3eIW6tiDHejUk8L7ltkjm"
+                    ]
+                }
+            }
+        },
+        {
             "name": "ec-cube/plugin-installer",
             "version": "2.0.1",
             "source": {
@@ -2267,6 +2291,38 @@
                 "source": "https://github.com/EC-CUBE/eccube-plugin-installer/tree/2.0.1"
             },
             "time": "2021-07-20T01:13:11+00:00"
+        },
+        {
+            "name": "ec-cube/securitychecker42",
+            "version": "4.2.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://package-api-c2.ec-cube.net/v42/ec-cube/securitychecker42/4.2.0/Securitychecker42-4.2.0.tgz"
+            },
+            "require": {
+                "ec-cube/plugin-installer": "^2.0"
+            },
+            "type": "eccube-plugin",
+            "extra": {
+                "code": "Securitychecker42",
+                "id": 2402
+            },
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "EC-CUBE CO.,LTD.",
+                    "email": "support@ec-cube.net"
+                }
+            ],
+            "transport-options": {
+                "http": {
+                    "header": [
+                        "X-ECCUBE-KEY: wFpYIGbcZ7WK4gZoIEE3eIW6tiDHejUk8L7ltkjm"
+                    ]
+                }
+            }
         },
         {
             "name": "egulias/email-validator",
@@ -13859,7 +13915,7 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.4.0"
+        "php": "8.1.16"
     },
     "plugin-api-version": "2.3.0"
 }

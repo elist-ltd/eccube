@@ -1,0 +1,3 @@
+[submodule "app/Plugin/ShoppingMall"]
+	path = app/Plugin/ShoppingMall
+	url = https://github.com/elist-ltd/eccube-multi-shop.git

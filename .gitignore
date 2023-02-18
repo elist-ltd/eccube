@@ -50,3 +50,8 @@ node_modules
 /.php-cs-fixer.cache
 /.php-cs-fixer.*.php
 ###< friendsofphp/php-cs-fixer ###
+
+# Add
+!/app/Plugin/Coupon42
+!/app/Plugin/Securitychecker42
+!/app/Plugin/ShoppingMall

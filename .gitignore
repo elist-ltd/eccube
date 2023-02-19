@@ -54,4 +54,5 @@ node_modules
 # Add
 !/app/Plugin/Coupon42
 !/app/Plugin/Securitychecker42
+!/app/Plugin/RefineSitemap42
 !/app/Plugin/ShoppingMall

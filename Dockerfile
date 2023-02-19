@@ -1,7 +1,7 @@
 ARG TAG=8.1-apache-bullseye
 FROM php:${TAG}
 
-ENV APACHE_DOCUMENT_ROOT /var/www/html
+ENV APACHE_DOCUMENT_ROOT /var/www/eccube
 
 RUN apt update \
   && apt upgrade -y \

@@ -491,7 +491,7 @@ Styleguide 11.2.5
   position: relative;
   @include media_desktop {
     float: left;
-    width: auto;
+    // width: auto;
   }
 }
 
@@ -510,7 +510,7 @@ Styleguide 11.2.5
   background: #fff;
   border-bottom: 1px solid #E8E8E8;
   @include media_desktop {
-    text-align: center;
+    text-align: left;
     border-bottom: none;
   }
 }
@@ -523,8 +523,8 @@ Styleguide 11.2.5
   min-width: 200px;
   list-style: none;
   position: static;
-  top: 100%;
-  left: 0;
+  top: 0;
+  left: 100%;
   @include media_desktop {
     display: block;
     z-index: 100;

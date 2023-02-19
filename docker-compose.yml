@@ -34,7 +34,7 @@ services:
       # - "var:/var/www/html/var"
       # - "vendor:/var/www/html/vendor"
       # - "node_modules:/var/www/html/node_modules"
-      - ".:/var/www/html:cached"
+      - ".:/var/www/eccube"
     environment:
       # EC-CUBE environments
       APP_ENV: "dev"

@@ -1,0 +1,93 @@
+{% extends 'default_frame.twig' %}
+
+{% block javascript %}
+    <script>
+        $(function() {
+            $(".ac_click_menu-trigger a").on("click", function() {
+                $(this).find("i").toggleClass("fa-plus fa-minus");
+                $(this).parent().next(".ac_click_menu-target").slideToggle();
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheet %}
+    <style>
+        .ec-sitemapRole {
+            
+        }
+        .ec-sitemapRole a:hover {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    {% set SitemapPages = repository('Eccube\\Entity\\Page').findBy({sitemap: 1}, { name: 'asc' }) %}
+    {% set Products = repository('Eccube\\Entity\\Product').findBy({Status: 1}) %}
+    {% set Categories = repository('Eccube\\Entity\\Category').findAll() %}
+
+    <div class="ec-role">
+        <div class="ec-sitemapRole">
+            <ul class="ac_click_menu">
+                {% for page in SitemapPages %}
+                    {% if page.file_name == not null %}
+                        {# 商品一覧ページ  #}
+                        {% if page.url == 'product_list' %}
+                            <li class="ac_click_menu-trigger">
+                                <span>
+                                    <a>{{ page.name }}<i class="fas fa-plus"></i></a>
+                                </span>
+                                <ul class="ac_click_menu-target" style="display: none;">
+                                    <li>
+                                        <span>
+                                            <a href="{{ url('product_list') }}">{{ page.name }}</a>
+                                        </span>
+                                    </li>
+                                    {% for Category in Categories %}
+                                        <li>
+                                            <span>
+                                                <a href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a>
+                                            </span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {# 商品詳細ページ  #}
+                        {% elseif page.url == 'product_detail' %}
+                            <li class="ac_click_menu-trigger">
+                                <span>
+                                    <a>{{ page.name }}<i class="fas fa-plus"></i></a>
+                                </span>
+                                <ul class="ac_click_menu-target" style="display: none;">
+                                    {% for Product in Products %}
+                                        <li>
+                                            <span>
+                                                <a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a>
+                                            </span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {# その他のページ #}
+                        {% else %}
+                            <li>
+                                <span>
+                                    {% if router.routecollection.get(page.url) %}
+                                        {% if '{' in router.routecollection.get(page.url).path %}
+                                            {{ page.name }}
+                                        {% else %}
+                                            <a href="{{ router.routecollection.get(page.url).path }}">{{ page.name }}</a>
+                                        {% endif %}
+                                    {% else %}
+                                        <a href="{{ url(page.url) }}">{{ page.name }}</a>
+                                    {% endif %}
+                                </span>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

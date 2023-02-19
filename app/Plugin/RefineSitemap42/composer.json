@@ -1,0 +1,1 @@
+{"name":"ec-cube\/refinesitemap42","version":"4.2.1","description":"\u30b5\u30a4\u30c8\u30de\u30c3\u30d7\u30d7\u30e9\u30b0\u30a4\u30f3(4.2\u7cfb)","type":"eccube-plugin","require":{"ec-cube\/plugin-installer":"~0.0.7 || ^2.0"},"extra":{"code":"RefineSitemap42","id":2679}}

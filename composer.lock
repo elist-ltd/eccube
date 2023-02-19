@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8543047909cbc442dac99ed8da8cabd5",
+    "content-hash": "76aa079d3ea8219d4199ab281355a276",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2291,6 +2291,30 @@
                 "source": "https://github.com/EC-CUBE/eccube-plugin-installer/tree/2.0.1"
             },
             "time": "2021-07-20T01:13:11+00:00"
+        },
+        {
+            "name": "ec-cube/refinesitemap42",
+            "version": "4.2.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://package-api-c2.ec-cube.net/v42/ec-cube/refinesitemap42/4.2.1/RefineSitemap42-4.2.1.tgz"
+            },
+            "require": {
+                "ec-cube/plugin-installer": "~0.0.7 || ^2.0"
+            },
+            "type": "eccube-plugin",
+            "extra": {
+                "code": "RefineSitemap42",
+                "id": 2679
+            },
+            "description": "サイトマッププラグイン(4.2系)",
+            "transport-options": {
+                "http": {
+                    "header": [
+                        "X-ECCUBE-KEY: wFpYIGbcZ7WK4gZoIEE3eIW6tiDHejUk8L7ltkjm"
+                    ]
+                }
+            }
         },
         {
             "name": "ec-cube/securitychecker42",
